@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ALRAC · Invitación al primer piloto</title>
+<meta name="description" content="Infraestructura abierta para federar proyectos regenerativos sin fusionarlos. Contabilidad anclada en energía real: 1 TQ = 1 kWh. Estamos buscando el primer piloto.">
+<meta property="og:title" content="ALRAC · Federar sin absorber">
+<meta property="og:description" content="Contabilidad anclada en energía real (1 TQ = 1 kWh) para ecoaldeas, cooperativas y equipos técnicos. Código abierto. Buscamos el primer piloto.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0F2A2B;
+    --teal-2: #17393A;
+    --sun: #E8B93A;
+    --moss: #4F7A4A;
+    --on-dark: #EAF0E6;
+    --on-dark-muted: #A9BDB4;
+
+    --bg: #E9EDE4;
+    --bg-alt: #DCE3D6;
+    --ink: #14282A;
+    --muted: #4B5D5A;
+    --line: #B9C5B8;
+    --card: #F3F6EF;
+    --accent-ink: #14282A;
+
+    --display: "Bricolage Grotesque", "Trebuchet MS", "Segoe UI", sans-serif;
+    --body: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0C2122;
+      --bg-alt: #112B2C;
+      --ink: #E7EEE3;
+      --muted: #A3B8B0;
+      --line: #27474A;
+      --card: #153334;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0C2122;
+    --bg-alt: #112B2C;
+    --ink: #E7EEE3;
+    --muted: #A3B8B0;
+    --line: #27474A;
+    --card: #153334;
+  }
+
+  html { background: var(--teal); scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { max-width: 100%; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { width: min(1080px, 100% - 2.5rem); margin-inline: auto; }
+
+  h1, h2, h3 { font-family: var(--display); line-height: 1.08; margin: 0; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(1.75rem, 4.2vw, 2.6rem); font-weight: 700; max-width: 22ch; }
+  h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em; }
+  p { margin: 0; }
+  .lede { color: var(--muted); max-width: 60ch; margin-top: 1rem; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 3rem; padding: 0.75rem 1.5rem;
+    font-family: var(--body); font-weight: 600; font-size: 1rem;
+    text-decoration: none; border-radius: 999px; border: 2px solid transparent;
+    cursor: pointer; transition: transform .15s ease, background-color .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-sun { background: var(--sun); color: #14282A; }
+  .btn-sun:hover { background: #F2C85A; }
+  .btn-line { border-color: var(--on-dark-muted); color: var(--on-dark); background: transparent; }
+  .btn-line:hover { border-color: var(--on-dark); }
+
+  /* HERO */
+  .hero { background: var(--teal); color: var(--on-dark); padding: clamp(2.5rem, 7vw, 5.5rem) 0 clamp(3rem, 7vw, 5rem); }
+  .brand { font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--on-dark-muted); margin-bottom: clamp(2rem, 6vw, 4rem); display: flex; gap: .6rem; align-items: center; }
+  .brand i { width: .7rem; height: .7rem; border-radius: 50%; background: var(--sun); display: inline-block; }
+  .hero-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); grid-template-columns: 1fr; align-items: center; }
+  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.15fr 1fr; } }
+  .hero h1 { font-size: clamp(2.3rem, 6.4vw, 4.4rem); font-weight: 800; max-width: 15ch; }
+  .hero .sub { margin-top: 1.4rem; font-size: 1.15rem; color: var(--on-dark-muted); max-width: 46ch; }
+  .hero .sub strong { color: var(--on-dark); font-weight: 600; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+
+  /* Ledger gauge */
+  .ledger { background: var(--teal-2); border: 1px solid #2B5052; border-radius: 20px; padding: 1.5rem; }
+  .ledger-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .ledger-title { font-family: var(--display); font-weight: 700; font-size: 1.05rem; }
+  .ledger-note { font-size: .875rem; color: var(--on-dark-muted); }
+  .balance { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 8vw, 3.8rem); line-height: 1; margin: 1.25rem 0 .25rem; letter-spacing: -0.03em; }
+  .balance small { font-size: 1.1rem; font-weight: 600; color: var(--sun); margin-left: .35rem; letter-spacing: 0; }
+  .equiv { color: var(--on-dark-muted); font-size: .95rem; }
+  .track { position: relative; height: 14px; border-radius: 999px; background: #0B2021; margin: 1.6rem 0 .5rem; }
+  .track .mid { position: absolute; left: 50%; top: -5px; bottom: -5px; width: 2px; background: var(--on-dark-muted); opacity: .6; }
+  .track .fill { position: absolute; top: 0; bottom: 0; background: var(--sun); border-radius: 999px; transition: left .35s ease, width .35s ease; }
+  .track .pin { position: absolute; top: 50%; width: 22px; height: 22px; border-radius: 50%; background: var(--on-dark); border: 4px solid var(--teal); box-shadow: 0 0 0 2px var(--sun); transform: translate(-50%, -50%); transition: left .35s ease; }
+  .scale { display: flex; justify-content: space-between; font-size: .85rem; color: var(--on-dark-muted); }
+  .ledger-actions { display: flex; gap: .7rem; margin-top: 1.25rem; flex-wrap: wrap; }
+  .ledger-actions button { flex: 1 1 8rem; min-height: 2.75rem; border-radius: 12px; border: 1px solid #3A6466; background: transparent; color: var(--on-dark); font: 600 .95rem var(--body); cursor: pointer; }
+  .ledger-actions button:hover { border-color: var(--sun); }
+  .ledger-actions button:disabled { opacity: .45; cursor: not-allowed; }
+  .ledger-msg { min-height: 3.2em; margin-top: 1rem; font-size: .95rem; color: var(--on-dark); }
+  .ledger-msg.stop { color: var(--sun); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .track .fill, .track .pin, .btn { transition: none; }
+  }
+
+  /* SECTIONS */
+  section { padding: clamp(3rem, 7vw, 5.5rem) 0; }
+  .alt { background: var(--bg-alt); }
+
+  /* Who */
+  .who { display: grid; gap: 1px; margin-top: 2.5rem; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .who { grid-template-columns: 1fr 1fr; } }
+  .who > div { background: var(--bg); padding: 1.6rem; }
+  .who p { color: var(--muted); margin-top: .5rem; }
+
+  /* Layers */
+  .layers { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; gap: .6rem; }
+  .layers li { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; align-items: baseline; padding: 1rem 1.25rem; background: var(--card); border-left: 6px solid var(--moss); border-radius: 4px 12px 12px 4px; }
+  .layers li:nth-child(odd) { border-left-color: var(--sun); }
+  .layers b { font-family: var(--display); font-size: .95rem; color: var(--muted); font-weight: 700; }
+  .layers span { display: block; }
+  .layers .t { font-weight: 600; }
+  .layers .d { color: var(--muted); font-size: .98rem; }
+  @media (max-width: 560px) { .layers li { grid-template-columns: 1fr; gap: .15rem; } }
+
+  /* Offers */
+  .offers { display: grid; gap: 1rem; margin-top: 2.5rem; grid-template-columns: 1fr; }
+  @media (min-width: 800px) { .offers { grid-template-columns: repeat(3, 1fr); } }
+  .offer { padding: 1.6rem; border: 1px solid var(--line); border-radius: 16px; background: var(--card); display: flex; flex-direction: column; gap: .6rem; }
+  .offer.first { border: 2px solid var(--sun); background: var(--card); }
+  .offer .when { font-size: .9rem; font-weight: 600; color: var(--moss); }
+  .offer.first .when { color: var(--ink); }
+  .offer p { color: var(--muted); }
+
+  /* Honest status */
+  .status { margin-top: 2.5rem; padding: 1.6rem; border-radius: 16px; background: var(--teal); color: var(--on-dark); display: grid; gap: 1.5rem; }
+  @media (min-width: 800px) { .status { grid-template-columns: 1fr 1fr; padding: 2rem; } }
+  .status h3 { color: var(--sun); margin-bottom: .5rem; }
+  .status p { color: var(--on-dark-muted); }
+  .facts { list-style: none; padding: 0; margin: 0; display: grid; gap: .75rem; }
+  .facts li { display: flex; gap: .75rem; align-items: baseline; color: var(--on-dark-muted); }
+  .facts li b { color: var(--on-dark); font-family: var(--display); font-size: 1.4rem; min-width: 3.2rem; }
+
+  /* Final CTA */
+  .final { background: var(--teal); color: var(--on-dark); }
+  .final h2 { max-width: 20ch; font-size: clamp(2rem, 5.5vw, 3.4rem); font-weight: 800; }
+  .final .lede { color: var(--on-dark-muted); }
+  .final .cta-row { margin-top: 2rem; }
+  footer { background: var(--teal); color: var(--on-dark-muted); padding: 0 0 2.5rem; font-size: .95rem; }
+  footer .wrap { border-top: 1px solid #2B5052; padding-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; }
+  footer strong { color: var(--on-dark); font-family: var(--display); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><i aria-hidden="true"></i>Zeitnus · Consorcio ALRAC</div>
+    <div class="hero-grid">
+      <div>
+        <h1>Federar proyectos sin que uno absorba al otro</h1>
+        <p class="sub">ALRAC es infraestructura abierta para que ecoaldeas, cooperativas y equipos técnicos se coordinen con una contabilidad atada a energía real: <strong>1 TQ = 1 kWh</strong>. Estamos abriendo el primer piloto.</p>
+        <div class="cta-row">
+          <a class="btn btn-sun" href="#invitacion">Quiero ser el primer piloto</a>
+          <a class="btn btn-line" href="https://github.com/Isaacko0/Zeitnus-Firma-Operaciones-Ecotomica" target="_blank" rel="noopener">Ver el código</a>
+        </div>
+      </div>
+
+      <div class="ledger" role="group" aria-labelledby="ledger-t">
+        <div class="ledger-head">
+          <span class="ledger-title" id="ledger-t">Saldo de tu nodo</span>
+          <span class="ledger-note">Prueba la regla</span>
+        </div>
+        <div class="balance" aria-live="polite"><span id="bal">0</span><small>TQ</small></div>
+        <div class="equiv" id="equiv">Saldo en equilibrio</div>
+        <div class="track" aria-hidden="true">
+          <div class="mid"></div>
+          <div class="fill" id="fill" style="left:50%;width:0"></div>
+          <div class="pin" id="pin" style="left:50%"></div>
+        </div>
+        <div class="scale" aria-hidden="true"><span>−500</span><span>0</span><span>+500</span></div>
+        <div class="ledger-actions">
+          <button type="button" id="use">Consumir 100 kWh</button>
+          <button type="button" id="give">Aportar 100 kWh</button>
+        </div>
+        <p class="ledger-msg" id="msg">Cada TQ equivale a un kWh. No se compra, no se especula: se aporta y se usa.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Para quién es esta invitación</h2>
+    <p class="lede">Si ya trabajas en regeneración de territorio, economía local o tecnología comunitaria, ALRAC te da un marco común sin pedirte que cambies de identidad.</p>
+    <div class="who">
+      <div>
+        <h3>Ecoaldeas y cooperativas</h3>
+        <p>Coordinen trabajo e intercambio entre nodos con una unidad que no se especula y tiene un límite claro.</p>
+      </div>
+      <div>
+        <h3>Municipios y organizaciones civiles</h3>
+        <p>Midan, cumplan y generen confianza con reglas que cualquiera puede revisar.</p </div>
+      <div>
+        <h3>Equipos técnicos</h3>
+        <p>TypeScript, 19 especificaciones ejecutables y licencia MIT. Entra, revisa y propone cambios.</p>
+      </div>
+      <div>
+        <h3>Proyectos aliados</h3>
+        <p>Conservas tu nombre, tu licencia y tu gobierno propio. Federar no es fusionar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>Cómo está armado</h2>
+    <p class="lede">Siete capas, cada una con un trabajo claro. Puedes entrar por cualquiera sin tener que adoptar las demás.</p>
+    <ol class="layers">
+      <li><b>Capa 0</b><span><span class="t">Epistémica</span><span class="d">Cómo decidimos qué es verdad y cuándo detenernos si el sistema se desborda.</span></span></li>
+      <li><b>Capa 0.5</b><span><span class="t">Normativa</span><span class="d">Licencias abiertas y reglas de uso responsable.</span></span></li>
+      <li><b>Capa 1</b><span><span class="t">Contable-física</span><span class="d">El libro de TQ: 1 TQ = 1 kWh, con saldo limitado a ±500.</span></span></li>
+      <li><b>Capa 2</b><span><span class="t">Interoperabilidad</span><span class="d">Identidad, procedencia de datos e intercambio de valor entre proyectos.</span></span></li>
+      <li><b>Capa 3</b><span><span class="t">Membrana con la economía formal</span><span class="d">El puente con pesos y dólares digitales, sin mezclar las reglas internas.</span></span></li>
+      <li><b>Capa 4</b><span><span class="t">Aplicaciones</span><span class="d">Mercado, educación y emparejamiento entre quienes se necesitan.</span></span></li>
+      <li><b>Capa 5</b><span><span class="t">Gobernanza</span><span class="d">Una persona, un voto; decisiones en el nivel más cercano a quien las vive.</span></span></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Qué puedes pedir primero</h2>
+    <p class="lede">Empezamos por lo más pequeño que genera valor real: entender si ALRAC encaja contigo.</p>
+    <div class="offers">
+      <div class="offer first">
+        <span class="when">Abierto ahora · primeros 3 meses</span>
+        <h3>Diagnóstico de encaje</h3>
+        <p>Revisamos tu proyecto, tus reglas y tus flujos de energía para ver qué conviene federar y qué no.</p>
+      </div>
+      <div class="offer">
+        <span class="when">Siguiente etapa</span>
+        <h3>Kit de simulación</h3>
+        <p>Simula cómo se movería el saldo TQ entre tus nodos antes de comprometer nada.</p>
+      </div>
+      <div class="offer">
+        <span class="when">Siguiente etapa</span>
+        <h3>Prototipado de vía</h3>
+        <p>Armamos contigo el primer circuito de intercambio entre dos o más proyectos.</p>
+      </div>
+    </div>
+
+    <div class="status">
+      <div>
+        <h3>Dónde estamos, sin adornos</h3>
+        <p>El núcleo técnico ya compila sin errores y está documentado. Todavía no hay clientes reales: por eso esta invitación. Buscamos el primer caso para validar el diagnóstico en campo.</p>
+      </div>
+      <ul class="facts">
+        <li><b>19</b> especificaciones abiertas que son la fuente de verdad</li>
+        <li><b>MIT</b> licencia del código, sin letra chica</li>
+        <li><b>0</b> errores de TypeScript en el núcleo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="invitacion">
+  <div class="wrap">
+    <h2>Sé el primer piloto</h2>
+    <p class="lede">Cuéntanos qué proyecto tienes, dónde está y qué quieres coordinar. Te respondemos con una propuesta de diagnóstico.</p>
+    <div class="cta-row">
+      <a class="btn btn-sun" href="https://wa.me/523511474178?text=Hola%2C%20me%20interesa%20ser%20piloto%20de%20ALRAC.%20Mi%20proyecto%20es%3A%20" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+      <a class="btn btn-line" href="https://t.me/isaacko0" target="_blank" rel="noopener">Escribir por Telegram</a>
+      <a class="btn btn-line" href="https://github.com/Isaacko0/Zeitnus-Firma-Operaciones-Ecotomica" target="_blank" rel="noopener">Revisar el repositorio</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span><strong>Zeitnus</strong> · Zamora, Michoacán, México</span>
+    <span>La pala y el teclado están en tus manos. E=V.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var MAX = 500, STEP = 100, bal = 0;
+  var elBal = document.getElementById('bal'),
+      elFill = document.getElementById('fill'),
+      elPin = document.getElementById('pin'),
+      elEq = document.getElementById('equiv'),
+      elMsg = document.getElementById('msg'),
+      btnUse = document.getElementById('use'),
+      btnGive = document.getElementById('give');
+
+  function render(note, stop) {
+    var pct = 50 + (bal / MAX) * 50;
+    elBal.textContent = (bal > 0 ? '+' : bal < 0 ? '−' : '') + Math.abs(bal);
+    elPin.style.left = pct + '%';
+    if (bal >= 0) { elFill.style.left = '50%'; elFill.style.width = (pct - 50) + '%'; }
+    else { elFill.style.left = pct + '%'; elFill.style.width = (50 - pct) + '%'; }
+    elEq.textContent = bal === 0 ? 'Saldo en equilibrio'
+      : bal > 0 ? 'Aportaste ' + bal + ' kWh más de los que usaste'
+      : 'Usaste ' + Math.abs(bal) + ' kWh más de los que aportaste';
+    btnGive.disabled = bal >= MAX;
+    btnUse.disabled = bal <= -MAX;
+    if (note) { elMsg.textContent = note; elMsg.className = 'ledger-msg' + (stop ? ' stop' : ''); }
+  }
+
+  function move(delta) {
+    var next = bal + delta;
+    if (Math.abs(next) > MAX) return;
+    bal = next;
+    var atLimit = Math.abs(bal) === MAX;
+    render(atLimit
+      ? 'Límite de ±500 TQ. El sistema no deja que el desbalance crezca: hay que equilibrar antes de seguir.'
+      : (delta > 0 ? 'Aportaste energía a la red: tu saldo sube.' : 'Usaste energía de la red: tu saldo baja.'),
+      atLimit);
+  }
+
+  btnGive.addEventListener('click', function () { move(STEP); });
+  btnUse.addEventListener('click', function () { move(-STEP); });
+  render();
+})();
+</script>
+</body>
+</html>
